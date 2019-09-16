@@ -19,6 +19,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.util.Objects;
 import java.util.Properties;
 
 @Configuration
@@ -67,7 +68,7 @@ public class DatabaseConfiguration {
 
         Properties jpaProps = new Properties();
         jpaProps.put("hibernate.physical_naming_strategy",
-                env.getProperty("spring.jpa.hibernate.naming.physical-strategy"));
+                Objects.requireNonNull(env.getProperty("spring.jpa.hibernate.naming.physical-strategy")));
         jpaProps.put("hibernate.hbm2ddl.auto", env.getProperty(
                 "spring.jpa.hibernate.ddl-auto", "none"));
         jpaProps.put("hibernate.jdbc.fetch_size", env.getProperty(
@@ -94,7 +95,7 @@ public class DatabaseConfiguration {
 
     @Bean(name = "batchTransactionManager")
     public PlatformTransactionManager transactionManager() {
-        return new JpaTransactionManager(batchEntityManagerFactory().getObject());
+        return new JpaTransactionManager(Objects.requireNonNull(batchEntityManagerFactory().getObject()));
     }
 
     @Bean
