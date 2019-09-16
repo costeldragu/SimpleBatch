@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Entity
 @Table(name="ACCOUNTS")
 @Data
-public class Accounts implements Serializable {
+public class Account implements Serializable {
 
     @Id
     @Column(name = "userId")
